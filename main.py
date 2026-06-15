@@ -1,11 +1,20 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 import requests
 
 app = FastAPI()
 
+# 아래 부분이 바로 /send 주소를 만들어주는 코드입니다!
+@app.get("/send")
+def send_telegram_message():
+    token = "8608136673:AAFp7PPRON868rhREFFvL_nKZ6WEuAfl8ug"
+    chat_id = "8839904195"
+    message = "테스트 메시지입니다!"
+    url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
+    requests.get(url)
+    return {"message": "메시지 전송 성공!"}
+
 # 텔레그램 봇 정보 (본인의 값으로 수정하세요)
-TELEGRAM_BOT_TOKEN = "8608136673:AAFp7PPRON868rhREFFvL_nKZ6WEuAfl8ug
-"
+TELEGRAM_BOT_TOKEN = "8608136673:AAFp7PPRON868rhREFFvL_nKZ6WEuAfl8ug"
 CHAT_ID = "8839904195"
 
 @app.post("/api/signup-notify")
